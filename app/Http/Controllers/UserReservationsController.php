@@ -11,7 +11,7 @@ use App\Http\Controllers\Controller;
 
 class UserReservationsController extends Controller
 {
-	/**
+    /**
      * Index function that returns the user_reservation view
      *
      * @return view
