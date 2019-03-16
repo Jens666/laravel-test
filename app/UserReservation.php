@@ -33,7 +33,7 @@ class UserReservation extends Model
 
     /**
      * Function that determines if there is room for a given number of guests within a given
-     * timespan
+     * timespan.
      *     
      * time : 16    18    20    22
      *         |__2__|__4__|__4__|
@@ -44,6 +44,8 @@ class UserReservation extends Model
      * If the user were to place a reservation between 16 and 18 the function would calculate
      * that 14 seats were taken - thus there would be room for 6. Looking to place a reservation
      * between 20 and 22 the function would calculate 8 seats to be taken.
+     *
+     * The example above illustrates cases where the timespan for bookings may vary.
      *
      * @param int $numberOfGuests
      * @param datetime $bookedFrom

@@ -34,3 +34,7 @@ Route::get('/meals', [
 Route::get('/drinks/{type?}', [
 	'uses' => 'DrinksController@getDrink'
 ])->name('drinks');
+
+Route::post('/user_reservations/get_next_available', [
+	'uses' => 'UserReservationsController@getNextAvailable'
+]);

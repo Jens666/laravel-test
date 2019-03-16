@@ -23,28 +23,38 @@
                     @endauth
                 </div>
             @endif
-
             <div class="row">
-                <form method="POST" action="/user_reservations">
-                    @csrf
-                    <fieldset>
-                        <legend>Place a reservation at Sundown Blvd</legend>
+                <div class="col-6">
+                    <form method="POST" action="/user_reservations">
+                        @csrf
+                        <fieldset>
+                            <legend>Place a reservation at Sundown Blvd</legend>
                             <div class="form-group">
                                 <label for="email">Email address</label>
-                                <input type="email" class="form-control" id="email" placeholder="Enter email" name="email">
+                                @if(isset($from_error) && !$from_error)
+                                    <input type="email" class="form-control" id="email" placeholder="Enter email"
+                                name="email" value="{{ $email }}">
+                                @else
+                                    <input type="email" class="form-control" id="email" placeholder="Enter email"
+                                name="email">
+                                @endif
                                 <small id="emailHelp" class="form-text text-muted">We'll never share your email with anyone else.</small>
                             </div>
                             <div class="form-group">
                                 <label for="number_of_guests">Number of guests</label>
-                                <input type="number" class="form-control" id="number_of_guests" placeholder="From 2 to 10" name="number_of_guests">
+                                @if(isset($from_error) && !$from_error)
+                                    <input type="number" class="form-control" id="number_of_guests" placeholder="From 2 to 10" name="number_of_guests" value="{{ $number_of_guests }}">
+                                @else
+                                    <input type="number" class="form-control" id="number_of_guests" placeholder="From 2 to 10" name="number_of_guests">
+                                @endif
                             </div>
                             <div class="form-group">
-                                <label for="booked_from">Booked from</label>
-                                <input type="text" class="form-control" id="booked_from" placeholder="Y-m-d H:i:s" name="booked_from">
-                            </div>
-                            <div class="form-group">
-                                <label for="booked_until">Booked until</label>
-                                <input type="text" class="form-control" id="booked_until" placeholder="Y-m-d H:i:s" name="booked_until">
+                                <label for="booked_from">Reserve at</label>
+                                @if(isset($from_error) && !$from_error)
+                                    <input type="text" class="form-control" id="booked_from" placeholder="e.g. 2019-03-03 18:00:00" name="booked_from" value="{{ $booked_from }}">
+                                @else
+                                    <input type="text" class="form-control" id="booked_from" placeholder="e.g. 2019-03-03 18:00:00" name="booked_from">
+                                @endif
                             </div>
                             <div class="form-group">
                                 <div class="btn btn-secondary" onclick="getMeal()">Get the random meal!</div><br>
@@ -62,14 +72,37 @@
                                     <select class="form-control" id="drinks" name="drink_id">
                                     </select>
                                     <small id="drinkHelp" class="form-text text-muted">Carefully picked in relation to the meal type.</small>
-                                </div>
                             </div>
-                            <input type="hidden" name="the_meal_db_id" value="" id="theMealDbId">
-                            <button type="submit" class="btn btn-primary">Submit</button>
-
-                        </div>
-                    </fieldset>
-                </form>
+                            <div class="form-group">
+                                <input type="hidden" name="the_meal_db_id" value="" id="theMealDbId">
+                                <button type="submit" class="btn btn-primary">Submit</button>
+                            </div>
+                        </fieldset>
+                    </form>
+                </div>
+                <div class="col-6">
+                    @if(count($errors))
+                        <ul class="alert alert-danger">
+                            @foreach($errors->all() as $error)
+                                <li>{{$error}}</li>
+                            @endforeach
+                        </ul>
+                    @endif
+                    @if(isset($from_error) && $from_error)
+                    <form method="POST" action="/user_reservations/get_next_available">
+                        @csrf
+                        <fieldset>
+                            <legend>Let Sundown Blvd find an open slot</legend>
+                            <div class="form-group">
+                                <input type="hidden" name="email" value="{{ $email }}">
+                                <input type="hidden" name="number_of_guests" value="{{ $number_of_guests }}">
+                                <input type="hidden" name="booked_from" value="{{ $booked_from }}">
+                                <button type="submit" class="btn btn-primary">Get next available reservation</button>
+                            </div>
+                        </fieldset>
+                    </form>
+                    @endif
+                </div>
             </div>
         </div>
         <script>
