@@ -17,7 +17,7 @@ class UserReservationsController extends Controller
      * @return view
      * @author Jens666
      */
-	public function index() {
+    public function index() {
         return view('user_reservation');
 	}
 
@@ -102,7 +102,7 @@ class UserReservationsController extends Controller
      * @return view
      * @author Jens666
      */
-	public function getNextAvailable(Request $request) {
+    public function getNextAvailable(Request $request) {
         $numberOfGuests = $request->number_of_guests;
         $bookedFrom = $request->booked_from;
         $bookedUntil = new DateTime($bookedFrom);
@@ -121,7 +121,7 @@ class UserReservationsController extends Controller
             'number_of_guests' => $numberOfGuests,
             'booked_from' => $bookedFrom
         ]);
-	}
+    }
 
     /**
      * Function that recursively finds the next available 2 hour slot for a given number of guests
@@ -158,8 +158,7 @@ class UserReservationsController extends Controller
      * @return view
      * @author Jens666
      */
-	private function returnPlusTwoHours($bookedUntil)
-	{
+    private function returnPlusTwoHours($bookedUntil) {
         $bookedFrom = $bookedUntil;
         $bookedUntil = new DateTime($bookedFrom);
         $bookedUntil = $bookedUntil->modify('+2 hour');
@@ -174,7 +173,7 @@ class UserReservationsController extends Controller
      * @return view
      * @author Jens666
      */
-	private function validateTime($bookedFrom) {
+    private function validateTime($bookedFrom) {
         $bookedFrom = new DateTime($bookedFrom);
         $from = (int) $bookedFrom->format('H');
         $errors = [];
