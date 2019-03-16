@@ -53,7 +53,7 @@ class UserReservationsController extends Controller
         }
 
         $userReservation = new UserReservation;
-		if ($userReservation->isReservationAvailable($numberOfGuests, $bookedFrom, $bookedUntil)) {
+        if ($userReservation->isReservationAvailable($numberOfGuests, $bookedFrom, $bookedUntil)) {
 
             $drinkId = Drink::findOrCreate($request->drink_id);
             $meal = Meal::firstOrCreate(
@@ -92,11 +92,7 @@ class UserReservationsController extends Controller
     }
 
     /**
-     * Function that returns the user_reservation view wit pre-filled data
-     *
-     * Handling the request object the system checks if it is possible to do the reservation..
-     * If so, internal ids are fetched for meals, drinks and the user in question - and
-     * finally the reservation is placed
+     * Function that by post parameters returns user_reservation view with valid reservation time
      *
      * @param $request Request
      * @return view
