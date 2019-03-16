@@ -1,21 +1,21 @@
 <?php
 namespace App\Http\Controllers;
 
+use App\Meal;
 use App\Http\Controllers\Controller;
-use App\Http\Controllers\CurlTrait;
 
 class MealsController extends Controller
 {
-
-	use CurlTrait;
-	
+    /**
+     * Function that through model-curl-trait connection fetches a random meal
+     *
+     * @return array
+     * @author Jens666
+     */
 	public function getRandomMeal() {
-		$meal = $this->curlCall('https://www.themealdb.com/api/json/v1/1/random.php');
-		$meal = json_decode($meal, true);
+		$meal = Meal::curlGet();
 		$meal = $meal['meals'][0];
-
-		var_dump($meal['strMeal']);
-
+		
 		return [
 			'id' => $meal['idMeal'],
 			'name' => $meal['strMeal'],

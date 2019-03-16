@@ -1,9 +1,16 @@
 <?php
-namespace App\Http\Controllers;
+namespace App;
 
 trait CurlTrait 
 {
-	protected function curlCall($url) {
+    /**
+     * Open curl connection and execute
+     *
+     * @param string $url
+     * @return bool
+     * @author Jens666
+     */
+	public static function curlCall($url) {
         $ch = curl_init(); 
         curl_setopt($ch, CURLOPT_URL, $url); 
         curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);

@@ -7,9 +7,14 @@ class UserReservation extends Model
 {
     protected $table = 'user_reservations';
 
-    private $maxGuestsPrReservation = 10;
     private $maxGuestsInTotal = 20;
 
+    /**
+     * Indicates if the model should be timestamped.
+     *
+     * @var bool
+     */
+    public $timestamps = false;
 
     /**
      * The attributes that are mass assignable.
@@ -26,36 +31,37 @@ class UserReservation extends Model
     ];
 
 
+    /**
+     * Function that determines if there is room for a given number of guests within a given
+     * timespan
+     *     
+     * time : 16    18    20    22
+     *         |__2__|__4__|__4__|
+     *         |_____4_____|     |
+     *               |_____3_____|
+     *            |__8__|
+     *
+     * If the user were to place a reservation between 16 and 18 the function would calculate
+     * that 14 seats were taken - thus there would be room for 6. Looking to place a reservation
+     * between 20 and 22 the function would calculate 8 seats to be taken.
+     *
+     * @param int $numberOfGuests
+     * @param datetime $bookedFrom
+     * @param datetime $bookedUntil
+     * @return bool
+     * @author Jens666
+     */
     public function isReservationAvailable($numberOfGuests, $bookedFrom, $bookedUntil) {
-        if ($numberOfGuests > $this->maxGuestsPrReservation) {
-            return false;
-        }
-
         $currentBookings = $this->where('booked_from', '<', $bookedUntil)
             ->where('booked_until', '>', $bookedFrom)
             ->get();
 
         $seatsTaken = 0;
         foreach ($currentBookings as $booking) {
-            $seatsTaken += $booking->number_of_guests;
+            // Determine $seatsTaken by the definition that 9 guests actually occupy 10 seats
+            $remainder = $booking->number_of_guests % 2;
+            $seatsTaken += $booking->number_of_guests + $remainder;
         }
-        return $numberOfGuests + $seatsTaken <=  $this->maxGuestsInTotal;
+        return $numberOfGuests + $seatsTaken <= $this->maxGuestsInTotal;
     }
-
-    /**
-     * Indicates if the model should be timestamped.
-     *
-     * @var bool
-     */
-    public $timestamps = false;
-
-
-    /**
-     * The attributes that should be cast to native types.
-     *
-     * @var array
-     *
-    protected $casts = [
-        'email_verified_at' => 'datetime',
-    ];*/
 }
