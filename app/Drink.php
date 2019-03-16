@@ -16,10 +16,10 @@ class Drink extends Model
      * @var array
      */
     protected $fillable = [
-		'punk_api_id',
-		'name',
-		'description',
-		'tagline'
+        'punk_api_id',
+        'name',
+        'description',
+        'tagline'
     ];
 
     /**
@@ -40,6 +40,16 @@ class Drink extends Model
         return json_decode($drinks, true);
     }
 
+    /**
+     * Function that performs where firstOrCreate() comes short.
+     *
+     * Lookup if the given id is aldready stored locally 
+     * - if not - fetch from API, store data and deliver the local primary key
+     *
+     * @param string $url
+     * @return bool
+     * @author Jens666
+     */
     public static function findOrCreate($id) {
         $preExist = self::where('punk_api_id', '=', $id)->first();
 

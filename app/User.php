@@ -25,14 +25,4 @@ class User extends Authenticatable
      * @var bool
      */
     public $timestamps = false;
-
-
-    /**
-     * The attributes that should be cast to native types.
-     *
-     * @var array
-     *
-    protected $casts = [
-        'email_verified_at' => 'datetime',
-    ];*/
 }
