@@ -91,7 +91,7 @@ class UserReservationsController extends Controller
         }
     }
 
-   	 /**
+    /**
      * Function that returns the user_reservation view wit pre-filled data
      *
      * Handling the request object the system checks if it is possible to do the reservation..
