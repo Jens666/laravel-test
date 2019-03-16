@@ -137,7 +137,7 @@ class UserReservationsController extends Controller
         if (!empty($errors)) {
             $times = $this->returnPlusTwoHours($bookedUntil);
             return $this->getNextRecursive($userReservation, $numberOfGuests, $times[0], $times[1]);
-		}
+        }
 
         if ($userReservation->isReservationAvailable($numberOfGuests, $bookedFrom, $bookedUntil))	 {
             return $bookedFrom;
