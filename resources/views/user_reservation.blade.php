@@ -25,7 +25,7 @@
             @endif
             <div class="row">
                 <div class="col-6">
-                    <form method="POST" action="/user_reservations">
+                    <form method="POST" action="/">
                         @csrf
                         <fieldset>
                             <legend>Place a reservation at Sundown Blvd</legend>
@@ -75,7 +75,7 @@
                             </div>
                             <div class="form-group">
                                 <input type="hidden" name="the_meal_db_id" value="" id="theMealDbId">
-                                <button type="submit" class="btn btn-primary">Submit</button>
+                                <button type="submit" class="btn btn-primary">Place my reservation!</button>
                             </div>
                         </fieldset>
                     </form>
@@ -89,7 +89,7 @@
                         </ul>
                     @endif
                     @if(isset($from_error) && $from_error)
-                    <form method="POST" action="/user_reservations/get_next_available">
+                    <form method="POST" action="/get_next_available">
                         @csrf
                         <fieldset>
                             <legend>Let Sundown Blvd find an open slot</legend>

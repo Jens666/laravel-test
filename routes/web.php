@@ -19,11 +19,11 @@ Route::get('users/store/', [
 	'uses' => 'UsersController@store'
 ]);
 
-Route::post('/user_reservations', [
+Route::post('/', [
 	'uses' => 'UserReservationsController@store'
 ]);
 
-Route::get('/user_reservations', [
+Route::get('/', [
 	'uses' => 'UserReservationsController@index'
 ]);
 
@@ -35,6 +35,6 @@ Route::get('/drinks/{type?}', [
 	'uses' => 'DrinksController@getDrink'
 ])->name('drinks');
 
-Route::post('/user_reservations/get_next_available', [
+Route::post('/get_next_available', [
 	'uses' => 'UserReservationsController@getNextAvailable'
 ]);

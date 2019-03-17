@@ -34,6 +34,9 @@ class UserReservation extends Model
     /**
      * Function that determines if there is room for a given number of guests within a given
      * timespan.
+     *
+     * Before calculating whether there is room for the reservation, the function assures that
+     * the given $bookedFrom are not a date/time that has passed already
      *     
      * time : 16    18    20    22
      *         |__2__|__4__|__4__|
@@ -54,6 +57,11 @@ class UserReservation extends Model
      * @author Jens666
      */
     public function isReservationAvailable($numberOfGuests, $bookedFrom, $bookedUntil) {
+        $bookingTime = strtotime($bookedFrom);
+        if ($bookingTime < time()) {
+            return false;
+        }
+
         $currentBookings = $this->where('booked_from', '<', $bookedUntil)
             ->where('booked_until', '>', $bookedFrom)
             ->get();
