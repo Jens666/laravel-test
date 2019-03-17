@@ -40,6 +40,11 @@ class Drink extends Model
         return json_decode($drinks, true);
     }
 
+    public static function curlGetRandom() {
+        $drink = self::curlCall('https://api.punkapi.com/v2/beers/random');
+        return json_decode($drink, true);
+    }
+
     /**
      * Function that performs where firstOrCreate() comes short.
      *

@@ -115,12 +115,12 @@
                     document.getElementById("mealType").value = out.type;
                     document.getElementById("theMealDbId").value = out.id;
 
-                    getDrink(out.type);
+                    getDrink(out.name, out.type);
                 }).catch(err => { throw err });
             }
 
-            function getDrink(type) {
-                let url = '{{ route('drinks') }}' + '/' + type;
+            function getDrink(name, type) {
+                let url = '{{ route('drinks') }}' + '/' + name + '@' + type;
                 fetch(url)
                 .then(res => res.json())
                 .then((out) => {
